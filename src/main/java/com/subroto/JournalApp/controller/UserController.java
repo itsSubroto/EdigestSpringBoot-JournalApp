@@ -1,16 +1,14 @@
 package com.subroto.JournalApp.controller;
 
 import com.subroto.JournalApp.entity.User;
+import com.subroto.JournalApp.repository.UserRepository;
 import com.subroto.JournalApp.services.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -19,6 +17,9 @@ public class UserController {
 
     @Autowired
     private UserServices userServices;
+
+    @Autowired
+    private UserRepository userRepository ;
 
 
     //No need of this controller anymore; Because any user can't see other users.
@@ -44,9 +45,21 @@ public class UserController {
         User userInDb = userServices.findByUserName(userName);
         userInDb.setUsername(user.getUsername());
         userInDb.setPassword(user.getPassword());
-        userServices.saveEntry(userInDb);
+        userServices.saveNewUser(userInDb);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+
+
+    //    Delete user by username
+    @DeleteMapping()
+    public ResponseEntity<?> deleteUser(@RequestBody User user){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userName = authentication.getName();
+        userRepository.deleteByUsername(userName);
+
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 
 }

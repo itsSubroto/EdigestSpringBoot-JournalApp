@@ -22,7 +22,7 @@ public class Public {
     //    create user
     @PostMapping("/create-user")
     public boolean createUser(@RequestBody User user){
-        userServices.saveNewEntry(user);
+        userServices.saveNewUser(user);
         return true;
     }
 }

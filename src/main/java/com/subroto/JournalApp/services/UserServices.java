@@ -20,8 +20,8 @@ public class UserServices {
     @Autowired
     private UserRepository userRepository;
 
-    //Create
-    public void saveEntry(User user){
+    //Create (No Encryption)
+    public void saveUser(User user){
         try {
 
             userRepository.save(user);
@@ -36,8 +36,8 @@ public class UserServices {
 
 
 
-    //Create User By BCryping the password
-    public void saveNewEntry(User user){
+    //Create User By BCryping the password(WITH ENCRYPTION)
+    public void saveNewUser(User user){
         try {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.setRoles(Arrays.asList("USER"));
