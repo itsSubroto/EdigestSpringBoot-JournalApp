@@ -102,12 +102,8 @@ public class JournalEntityController {
                     journalEntryServices.saveEntry(old);
 
                     return new ResponseEntity<>(old,HttpStatus.OK);
+                 }
             }
-        }
-
-
-
-
         }
 
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);

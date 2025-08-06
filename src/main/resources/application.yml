@@ -1,0 +1,13 @@
+#This is a YAML file (full form of "YAML" -> YAML Ain't Markup Language)
+# The precedence works like ->
+#command line argument(--key=value) -> application.properties -> application.yml
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://subratasantra9638:Subrata%402003@cluster0.moq4x8t.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+      database: journaldb
+      auto-index-creation: true
+  main:
+    allow-circular-references: true
+
+

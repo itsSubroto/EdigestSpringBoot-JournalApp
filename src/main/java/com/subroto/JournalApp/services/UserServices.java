@@ -47,6 +47,20 @@ public class UserServices {
             log.error("Exception", e);
         }
     }
+
+    // To create a new admin
+    public void saveAdmin(User user){
+        try {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            user.setRoles(Arrays.asList("USER","ADMIN"));
+            userRepository.save(user);
+
+        } catch (Exception e) {
+            log.error("Exception", e);
+        }
+    }
+
+
     
 //    Read All
     public List<User> getAll(){
@@ -67,6 +81,7 @@ public class UserServices {
     public User findByUserName(String username){
         return userRepository.findByUsername(username);
     }
+
 
 }
 
