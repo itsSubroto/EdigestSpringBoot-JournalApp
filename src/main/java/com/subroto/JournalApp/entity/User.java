@@ -23,6 +23,10 @@ public class User {
     @NonNull
     private String username;
 
+    private String email;
+    private Boolean sentimentAnalysis;
+
+
     @NonNull
     private String password;
 
