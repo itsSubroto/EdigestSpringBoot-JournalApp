@@ -1,5 +1,6 @@
 package com.subroto.JournalApp.controller;
 
+import com.subroto.JournalApp.cache.AppCache;
 import com.subroto.JournalApp.entity.User;
 import com.subroto.JournalApp.services.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ public class AdminController {
     @Autowired
     private UserServices userServices;
 
+    @Autowired
+    private AppCache appCache ;
 
     @GetMapping("/all-users")
     public ResponseEntity<?> getAllUsers(){
@@ -31,6 +34,13 @@ public class AdminController {
     @PostMapping("/create-admin-user")
     public void createAdmin(@RequestBody User user){
         userServices.saveAdmin(user);
+    }
+
+
+//    for clear the cache data
+    @GetMapping("/clear-app-cache")
+    public void clearCache(){
+        appCache.init();
     }
 
 }

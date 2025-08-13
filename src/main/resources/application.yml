@@ -11,13 +11,21 @@ spring:
     allow-circular-references: true
 
 
-
+  #-----------------------------------------------------------------
   profile:
     active: dev
 
 #There is a thing "PROFILE" -> you can define multiple properties for different environment i.e. dev & prod
 #you just have to devine which one you want to use to run the application in the application.yml file
 #This can also be defined in the command line through mvn and then java jar file
+#-----------------------------------------------------------------
+
+
+#-----------------------------------------------------------------
+#@Value Notation using . Accessing the application.yml value in the application as a variable
+weather:
+  api:
+    key:  b19fd1808ff0152155fbf2bc991e8097
 
 
 
