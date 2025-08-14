@@ -10,6 +10,19 @@ spring:
   main:
     allow-circular-references: true
 
+  #  for the mail sender
+  mail:
+    host:
+    port: 587
+    username: example@gmail.com
+    password: xxxxxxx
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
 
   #-----------------------------------------------------------------
   profile:
