@@ -14,10 +14,10 @@ public class WeatherResponse{
 
     @Getter
     @Setter
-    public class Current{
+    public class Current {
         private int temperature;
 
-       @JsonProperty("weather_descriptions")
+        @JsonProperty("weather_descriptions")
         private List<String> weatherDescriptions;
 
         private int feelslike;

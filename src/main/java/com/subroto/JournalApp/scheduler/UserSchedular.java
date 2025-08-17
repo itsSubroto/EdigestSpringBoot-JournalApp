@@ -54,7 +54,7 @@ public class UserSchedular {
 
     //        Write a Cron for run the AppCache for each 10 min
 
-    @Scheduled(cron = "0 0/10 * 1/1 * ? *")
+    @Scheduled(cron = "0 0/10 * 1/1 * ?")
     public void clearAppcache(){
         appCache.init();
     }

@@ -10,15 +10,19 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-@Component
+@Service
 public class WeatherService {
 
     @Autowired
     private RestTemplate restTemplate;
     @Autowired
     private AppCache appCache;
+
+    @Autowired
+    private RedisService redisService ;
 
     @Value("${weather.api.key}")
     private String  apiKey;
@@ -29,7 +33,26 @@ public class WeatherService {
 
 
     public WeatherResponse getWeather(String city){
-        String finalApi = appCache.appCache.get(AppCache.keys.WEATHER_API.toString()).replace(Placeholders.API_KEY, apiKey).replace(Placeholders.CITY, city);
+        WeatherResponse weatherResponse = redisService.get("weather_of_" + city, WeatherResponse.class);
+
+        if (weatherResponse!=null){
+            return weatherResponse;
+        }else {
+            String finalApi = appCache.appCache.get(AppCache.keys.WEATHER_API.toString()).replace(Placeholders.API_KEY, apiKey).replace(Placeholders.CITY, city);
+
+            ResponseEntity<WeatherResponse> response = restTemplate.exchange(finalApi, HttpMethod.GET, null, WeatherResponse.class);
+
+            WeatherResponse body = response.getBody();
+
+            if (body!=null){
+                redisService.set("weather_of_" + city,body,300l);
+            }
+
+            return body;
+
+        }
+
+
 
 
         //This is for the post call through the restTemplate just use this httpEntity in the place of requestEntity
@@ -44,11 +67,7 @@ public class WeatherService {
 //        HttpEntity<String> httpEntity=new HttpEntity<>(userequestBody,httpHeaders);
 
 
-        ResponseEntity<WeatherResponse> response = restTemplate.exchange(finalApi, HttpMethod.GET, null, WeatherResponse.class);
 
-        WeatherResponse body = response.getBody();
-
-        return body;
     }
 
 
